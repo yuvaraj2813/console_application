@@ -1,0 +1,129 @@
+import java.util.*;
+public class Tic_tac_toe {
+	public static Scanner s=new Scanner(System.in);
+
+	public static void start()
+	{
+		char game[][]=new char[3][3];
+		for(int i=0;i<game.length;i++)
+		{
+			for(int j=0;j<game[0].length;j++)
+			{
+				game[i][j]=' ';
+			}
+		}
+		char player1='X';
+		char player2='O';
+		int count=0;
+		printboard(game);
+		while(true)
+		{
+			
+			getinput(player1,game);
+			count++;
+			printboard(game);
+			if(count>2)
+			{
+				if(checkwin(player1,game))
+				{
+					restart();
+					break;
+				}
+			}
+			getinput(player2,game);	
+			count++;
+			printboard(game);
+			if(count>2)
+			{
+				if(checkwin(player2,game))
+				{
+					restart();
+					break;
+				}
+			}
+			if(count==9)
+			{
+				System.out.println("No one win..");
+				restart();
+			}
+		}
+	}
+	public static void restart()
+	{
+		System.out.println("You wants to play once more...(Y/N)");
+		char st=s.next().charAt(0);
+		if(st=='Y')
+		{
+		start();
+		}
+		else
+		{
+			System.out.println("Good Bye.. See you again...");
+		}
+	}
+	private static boolean checkwin(char player, char[][] game) {
+		String str=player=='X'?"player1":"player2";
+		if(game[0][0]==player && game[1][1]==player && game[2][2]==player)
+		{
+			System.out.println(str +"win");
+			return true;
+		}
+		else if(game[0][2]==player && game[1][1]==player && game[2][0]==player)
+		{
+			System.out.println(str +"win");
+			return true;
+		}
+		else
+		{
+		for(int i=0;i<game.length;i++)
+		{
+			if(game[i][0]==player && game[i][1]==player && game[i][2]==player)
+			{
+				System.out.println(str +"win");
+				return true;
+			}
+			else if(game[0][i]==player && game[1][i]==player && game[2][i]==player)
+			{
+				System.out.println(str +"win");
+				return true;
+			}
+		}
+		}
+		return false;
+	}
+	public static void getinput(char player,char game[][])
+	{
+		String str=player=='X'?"player1":"player2";
+		System.out.println(str+":");
+		while(true)
+		{
+		int row=s.nextInt();
+		int col=s.nextInt();
+		if(game[row][col]==' ')
+		{
+			game[row][col]=player;
+			break;
+		}
+		else {
+			System.out.println("Enter valid position..");
+		}
+		}
+	}
+	
+	public static void printboard(char game[][])
+	{
+		for(int i=0;i<game.length;i++)
+		{
+			for(int j=0;j<game[0].length;j++)
+			{
+				System.out.print(game[i][j]+"|");
+			}
+			System.out.println();
+			System.out.println("-+-+-+");
+		}
+	}
+	public static void main(String args[])
+	{
+		start();
+	}
+}
